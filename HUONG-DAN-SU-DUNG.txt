@@ -1,0 +1,57 @@
+PDZ - DOWNLOAD OR REMOVE METADATA IMAGE CHATGPT  (PdzTools v1.0.1)
+=================================================================
+
+KHÔNG CẦN CÀI ĐẶT. Nhấp đúp file PDZ-Download-Remove-Metadata.exe để mở.
+
+* Lần đầu mở, nếu Windows hiện "Windows protected your PC":
+  bấm "More info" -> "Run anyway".
+* Nếu phần mềm diệt virus chặn nhầm: thêm file exe vào danh sách ngoại lệ.
+* Lần mở đầu có thể mất 3-5 giây.
+
+-----------------------------------------------------------------
+1. TẢI ẢNH TỪ URL (tab "Download từ URL")
+-----------------------------------------------------------------
+  1) Dán link ảnh vào ô. Một dòng hay nhiều dòng đều được.
+     Link phải bắt đầu bằng https:// và có đuôi ảnh
+     (.png .jpg .jpeg .webp .gif .bmp .tif).
+  2) Bấm "Chọn folder..." để chọn nơi lưu ảnh.
+  3) Chọn định dạng / chất lượng ở phần "Tuỳ chọn xuất".
+  4) Bấm "Bắt đầu".
+
+-----------------------------------------------------------------
+2. XOÁ METADATA ẢNH CÓ SẴN (tab "Xoá metadata ảnh trên máy")
+-----------------------------------------------------------------
+  1) Chọn "Nguồn ảnh":
+       - Cả thư mục    : bấm "Chọn thư mục...". Tick "Gồm cả ảnh trong thư mục con"
+                         nếu muốn xử lý luôn các thư mục bên trong.
+       - Chọn từng file: bấm "Chọn file ảnh...", giữ Ctrl để chọn nhiều file.
+  2) Bấm "Chọn folder..." để chọn nơi lưu ảnh đã xử lý.
+     (Ảnh gốc được giữ nguyên, không bị ghi đè.)
+  3) Bấm "Bắt đầu".
+
+-----------------------------------------------------------------
+TUỲ CHỌN XUẤT
+-----------------------------------------------------------------
+  Định dạng   : JPG (phổ biến) | WEBP (nhẹ nhất) | PNG | GIỮ NGUYÊN
+  Chất lượng  : 80-85 là hợp lý cho ảnh sản phẩm (ảnh PNG ~2.5MB -> ~300KB)
+  Cạnh dài    : 0 = giữ kích thước gốc; ví dụ 2000 = thu nhỏ cạnh dài về 2000px
+  Nền trong suốt: màu nền khi đổi ảnh trong suốt sang JPG (mặc định trắng)
+  Giữ ICC     : nên bật để màu hiển thị chuẩn
+
+-----------------------------------------------------------------
+KHI CÓ LỖI
+-----------------------------------------------------------------
+  * Chạy xong, tool hiện cửa sổ liệt kê URL/file lỗi và lý do.
+  * Có nút "Copy danh sách lỗi" và "Đưa URL lỗi vào ô để chạy lại".
+  * Danh sách lỗi cũng được lưu vào file pdz_errors.txt trong folder lưu.
+  Lỗi thường gặp:
+    - HTTP Error 403/404 : link hết hạn, sai link hoặc web chặn tải
+    - timed out          : mạng chậm, thử chạy lại
+    - không phải ảnh     : link trả về trang web chứ không phải file ảnh
+
+-----------------------------------------------------------------
+LƯU Ý
+-----------------------------------------------------------------
+  Tool xoá toàn bộ metadata (EXIF, XMP, IPTC, C2PA/Content Credentials).
+  Watermark ẩn trong pixel (ví dụ SynthID) KHÔNG bị xoá. Khi dùng ảnh AI
+  trên các sàn TMĐT, hãy tuân thủ quy định khai báo nội dung AI của sàn.

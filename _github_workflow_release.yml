@@ -1,0 +1,57 @@
+# Push tag dạng v1.0.2 -> GitHub tự build exe trên Windows và tạo Release kèm file zip.
+# Có thể chạy tay ở tab Actions (workflow_dispatch) để build thử, file tải ở mục Artifacts.
+name: Build & Release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  NAME: PDZ-Download-Remove-Metadata
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: requirements-build.txt
+
+      - name: Install dependencies
+        run: python -m pip install -r requirements-build.txt
+
+      - name: Build exe
+        run: >
+          python -m PyInstaller --noconfirm --clean --onefile --windowed
+          --icon assets/pdz.ico --version-file version.txt
+          --exclude-module numpy --name "${{ env.NAME }}" image_tool.py
+
+      - name: Package zip
+        shell: pwsh
+        run: |
+          $ver = if ("${{ github.ref_type }}" -eq "tag") { "${{ github.ref_name }}" } else { "dev" }
+          New-Item -ItemType Directory -Force -Path "release/$env:NAME" | Out-Null
+          Copy-Item "dist/$env:NAME.exe" "release/$env:NAME/"
+          Copy-Item "HUONG-DAN-SU-DUNG.txt" "release/$env:NAME/"
+          Compress-Archive -Path "release/$env:NAME" -DestinationPath "release/${env:NAME}_$ver.zip" -Force
+          "ZIP=release/${env:NAME}_$ver.zip" | Out-File -FilePath $env:GITHUB_ENV -Append
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.NAME }}
+          path: ${{ env.ZIP }}
+
+      - name: Create GitHub Release
+        if: github.ref_type == 'tag'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ env.ZIP }}
+          generate_release_notes: true
