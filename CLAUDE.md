@@ -22,3 +22,9 @@
 - Gói release/PDZ-Download-Remove-Metadata_v1.0.2.zip chứa đúng exe và HUONG-DAN-SU-DUNG.txt. Build artifacts/.venv được .gitignore loại trừ, không đưa binary vào Git.
 - QA bổ sung với chính thư viện build: ProcessPoolExecutor trên Windows giữ nhiều cấp thư mục và ảnh trùng tên ở các nhánh, xóa metadata PNG, chuyển JPG/resize và chế độ flat đều đạt. Diff check đạt.
 - Commit/push mã nguồn, version, changelog, hướng dẫn và tài liệu trên main theo yêu cầu. Không tạo tag/GitHub Release trong lượt này; ZIP/exe nằm local.
+
+### Phát hành GitHub Release v1.0.2 — user đã duyệt (2026-10-30)
+
+- User yêu cầu phát hành Release ngay sau khi đã build, QA, commit/push tính năng.
+- Dùng quy trình sẵn có .github/workflows/release.yml: tạo/push tag v1.0.2 để GitHub Actions build trên Windows (Python 3.11), đóng ZIP kèm hướng dẫn và tự tạo GitHub Release với ZIP đính kèm. Bản ZIP phát hành do CI build từ source của tag; bản build local trước đó vẫn giữ làm bản đã smoke-test.
+- Đã pull main và kiểm tra v1.0.2 chưa tồn tại trên local/remote trước khi tạo tag; không thay/di chuyển tag đã có.
