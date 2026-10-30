@@ -1,4 +1,4 @@
-PDZ - DOWNLOAD OR REMOVE METADATA IMAGE CHATGPT  (PdzTools v1.0.1)
+PDZ - DOWNLOAD OR REMOVE METADATA IMAGE CHATGPT  (PdzTools v1.0.2)
 =================================================================
 
 KHÔNG CẦN CÀI ĐẶT. Nhấp đúp file PDZ-Download-Remove-Metadata.exe để mở.
@@ -27,7 +27,12 @@ KHÔNG CẦN CÀI ĐẶT. Nhấp đúp file PDZ-Download-Remove-Metadata.exe đ�
        - Chọn từng file: bấm "Chọn file ảnh...", giữ Ctrl để chọn nhiều file.
   2) Bấm "Chọn folder..." để chọn nơi lưu ảnh đã xử lý.
      (Ảnh gốc được giữ nguyên, không bị ghi đè.)
-  3) Bấm "Bắt đầu".
+  3) Nếu chọn "Cả thư mục" và bật "Gồm cả ảnh trong thư mục con", có thể tick
+     "Giữ cấu trúc thư mục con khi lưu" để giữ cách chia thư mục như nguồn.
+     Ví dụ: nguồn\Ao\Do\anh.png -> đích\Ao\Do\anh.jpg.
+     Ảnh ở gốc nguồn sẽ nằm ngay gốc đích, không tạo thêm tên thư mục nguồn.
+     Mặc định không tick: mọi ảnh lưu chung vào thư mục đích như trước.
+  4) Bấm "Bắt đầu".
 
 -----------------------------------------------------------------
 TUỲ CHỌN XUẤT

@@ -84,12 +84,18 @@ def clean_image(src, out_dir, stem, opts):
     return dst
 
 
-def job_local(src, out_dir, opts):
+def job_local(src, out_dir, opts, source_root=None):
     """Chạy trong process riêng."""
     src = Path(src)
     try:
-        dst = clean_image(src, out_dir, src.stem, opts)
-        return True, src.name, src.stat().st_size, dst.stat().st_size, dst.name
+        target_dir = Path(out_dir)
+        if source_root is not None:
+            relative = src.resolve().relative_to(Path(source_root).resolve())
+            target_dir = target_dir / relative.parent
+        target_dir.mkdir(parents=True, exist_ok=True)
+        dst = clean_image(src, target_dir, src.stem, opts)
+        source_name = str(relative) if source_root is not None else src.name
+        return True, source_name, src.stat().st_size, dst.stat().st_size, str(dst.relative_to(Path(out_dir)))
     except Exception as e:
         return False, str(src), f"Lỗi xoá metadata: {e}", 0, ""
 
@@ -207,6 +213,11 @@ class App(tk.Tk):
         self.sub_chk.pack(side="left")
         self.src_lbl = ttk.Label(f, text="Chưa chọn ảnh", foreground="#666")
         self.src_lbl.pack(side="right")
+        self.keep_tree_var = tk.BooleanVar(value=False)
+        self.keep_tree_chk = ttk.Checkbutton(
+            t2, text="Giữ cấu trúc thư mục con khi lưu",
+            variable=self.keep_tree_var)
+        self.keep_tree_chk.pack(anchor="w", **pad)
         ttk.Separator(t2).pack(fill="x", padx=8, pady=4)
         f = ttk.Frame(t2)
         f.pack(fill="x", **pad)
@@ -298,6 +309,7 @@ class App(tk.Tk):
         self.src_dir = ""
         self.src_disp.set("")
         self.set_files([])
+        self.update_tree_option()
 
     def pick_source(self):
         if self.src_mode.get() == "folder":
@@ -321,7 +333,12 @@ class App(tk.Tk):
         return [str(p) for p in it if p.is_file() and p.suffix.lower() in EXTS
                 and not (out and (out == p.parent.resolve() or out in p.resolve().parents))]
 
+    def update_tree_option(self):
+        enabled = self.src_mode.get() == "folder" and self.sub_var.get()
+        self.keep_tree_chk.state(["!disabled"] if enabled else ["disabled"])
+
     def rescan(self):
+        self.update_tree_option()
         if self.src_mode.get() == "folder" and self.src_dir:
             self.set_files(self.scan_folder())
 
@@ -373,9 +390,13 @@ class App(tk.Tk):
         self.log.delete("1.0", "end")
         self.prog.config(maximum=len(items), value=0)
         self.write(f"Bắt đầu {'download' if mode == 0 else 'xử lý'} {len(items)} mục → {out}")
-        threading.Thread(target=self.worker, args=(mode, items, out, opts), daemon=True).start()
+        source_root = None
+        if (mode == 1 and self.src_mode.get() == "folder"
+                and self.sub_var.get() and self.keep_tree_var.get()):
+            source_root = str(Path(self.src_dir).resolve())
+        threading.Thread(target=self.worker, args=(mode, items, out, opts, source_root), daemon=True).start()
 
-    def worker(self, mode, items, out, opts):
+    def worker(self, mode, items, out, opts, source_root=None):
         tin = tout = 0
         errors = []
         if mode == 0:
@@ -385,7 +406,7 @@ class App(tk.Tk):
             futs = [ex.submit(job_url, u, out, opts, str(tmp_dir)) for u in items]
         else:
             ex = ProcessPoolExecutor(max_workers=max(1, (os.cpu_count() or 2) - 1))
-            futs = [ex.submit(job_local, f, out, opts) for f in items]
+            futs = [ex.submit(job_local, f, out, opts, source_root) for f in items]
         with ex:
             for i, fu in enumerate(as_completed(futs), 1):
                 try:

@@ -6,6 +6,7 @@ Tool desktop (Windows) chạy offline để:
 
 - **Download ảnh hàng loạt từ URL** và xoá metadata ngay khi tải.
 - **Xoá metadata ảnh có sẵn trên máy** (cả thư mục, kể cả thư mục con, hoặc từng file).
+- **Giữ cấu trúc thư mục con khi lưu** (tuỳ chọn khi xử lý cả thư mục có gồm thư mục con), giúp đối chiếu ảnh theo thư mục nguồn.
 - **Chuyển đổi / nén ảnh**: JPG, WEBP, PNG hoặc giữ nguyên định dạng; chỉnh chất lượng, giới hạn kích thước.
 
 Metadata bị xoá: EXIF, XMP, IPTC, C2PA / Content Credentials, text chunk PNG…
