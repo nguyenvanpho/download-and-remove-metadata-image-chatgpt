@@ -28,3 +28,5 @@
 - User yêu cầu phát hành Release ngay sau khi đã build, QA, commit/push tính năng.
 - Dùng quy trình sẵn có .github/workflows/release.yml: tạo/push tag v1.0.2 để GitHub Actions build trên Windows (Python 3.11), đóng ZIP kèm hướng dẫn và tự tạo GitHub Release với ZIP đính kèm. Bản ZIP phát hành do CI build từ source của tag; bản build local trước đó vẫn giữ làm bản đã smoke-test.
 - Đã pull main và kiểm tra v1.0.2 chưa tồn tại trên local/remote trước khi tạo tag; không thay/di chuyển tag đã có.
+- Kết quả: GitHub Actions run 41027404010 hoàn tất success. Release v1.0.2 đã public (draft=false, prerelease=false): https://github.com/nguyenvanpho/download-and-remove-metadata-image-chatgpt/releases/tag/v1.0.2 .
+- Asset PDZ-Download-Remove-Metadata_v1.0.2.zip đã uploaded, 18,351,341 bytes, SHA256 1d3a673b01944a97e3add72613fc5d6e4e94b0b2dcea21b7fed474b28904eee5. Link tải: https://github.com/nguyenvanpho/download-and-remove-metadata-image-chatgpt/releases/download/v1.0.2/PDZ-Download-Remove-Metadata_v1.0.2.zip . Tag trỏ commit 9ae0d09; commit ghi nhận kết quả sau đó chỉ cập nhật tài liệu, không thay binary/source của release.
